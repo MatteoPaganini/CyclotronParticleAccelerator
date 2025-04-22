@@ -56,14 +56,16 @@ public class Main implements Runnable{
         int internalXPos = 505;
 
         for (int a = 0; a <= 20; a++){
-            for (int ypos = 175; ypos < 575; ypos++){
+            for (int ypos = 40; ypos < 740; ypos++){
                 g.setColor(Color.BLACK);
                 g.fillOval(internalXPos,ypos,5,5);
+                //pause(30); //shows the anim
             }
         }
 
         g.setColor(Color.RED);
-        g.fillOval(505,375,5,5);
+        g.fillOval(505,375,5,5); //this point is the center of the Cyclotron
+        //...as long as I don't adjust the previous drawOval
 
         g.setColor(Color.CYAN);
         g.drawLine(500,40,500,700);
