@@ -2,6 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+//Questions for Mx. Bradford:
+//1) Do I still need the moveThings() method
+//2) Does my double for loop make sense... how would I add the animation?
+//3) Is there a way to make my code cleaner... do I need to construct the 'oval' manually?
+
+//Next Steps:
+//Implement the Physics into the render() method
+
+
 public class Main implements Runnable{
 
     static int WIDTH = 1000;
@@ -37,7 +46,6 @@ public class Main implements Runnable{
 
 
     public static void main(String[] args) {
-
         Main main = new Main();
         new Thread(main).start();
     }
@@ -53,13 +61,11 @@ public class Main implements Runnable{
         g.drawOval(180,50,650,650);
         g.fillOval(180,50,650,650);
 
-        int internalXPos = 505;
-
         for (int a = 0; a <= 20; a++){
-            for (int ypos = 40; ypos < 740; ypos++){
-                g.setColor(Color.BLACK);
-                g.fillOval(internalXPos,ypos,5,5);
-                //pause(30); //shows the anim
+            for (int ypos = 40; ypos < 710; ypos++){
+                g.setColor(Color.YELLOW);
+                g.fillOval(505, ypos,5,5);
+                //pause(10); //shows the animation?
             }
         }
 
@@ -77,7 +83,7 @@ public class Main implements Runnable{
     public void run() {
         while (true) {
 
-            moveThings();
+            //moveThings(); //do I need it???
             render();  // paint the graphics
             pause(20); // sleep for 10 ms
         }
@@ -93,8 +99,8 @@ public class Main implements Runnable{
     }
 
     public void moveThings(){
-        xpos = xpos+3;
-        ypos = ypos+1;
+        //xpos = xpos+3;
+        //ypos = ypos+1;
     }
 
 
