@@ -63,7 +63,7 @@ public class Main implements Runnable{
 
         for (int a = 0; a <= 20; a++){
             for (int ypos = 40; ypos < 710; ypos++){
-                g.setColor(Color.YELLOW);
+                g.setColor(Color.BLACK);
                 g.fillOval(505, ypos,5,5);
                 //pause(10); //shows the animation?
             }
@@ -73,8 +73,15 @@ public class Main implements Runnable{
         g.fillOval(505,375,5,5); //this point is the center of the Cyclotron
         //...as long as I don't adjust the previous drawOval
 
-        g.setColor(Color.CYAN);
-        g.drawLine(500,40,500,700);
+//        g.setColor(Color.CYAN);
+//        g.drawLine(500,40,500,700);
+
+        for (int xpos = 150; xpos < 900; xpos = xpos+60){
+            for (int ypos = 40; ypos < 850; ypos = ypos+60){
+                g.setColor(Color.BLUE);
+                g.fillOval(xpos, ypos,5,5);
+            }
+        }
 
         g.dispose();
         bufferStrategy.show();
