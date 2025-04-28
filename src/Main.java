@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 //Questions for Mx. Bradford:
 //1) Do I still need the moveThings() method
 //2) Does my double for loop make sense... how would I add the animation?
@@ -18,6 +21,7 @@ public class Main implements Runnable{
 
     public int xpos = 0;
     public int ypos = 0;
+    public int angle = -20;
     public BufferStrategy bufferStrategy;
 
     public Main(){
@@ -29,6 +33,7 @@ public class Main implements Runnable{
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.add(new JButton("Run!"), BorderLayout.SOUTH);
+        panel.add(new JButton("See B Field"), BorderLayout.NORTH);
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.BLACK);
@@ -82,6 +87,16 @@ public class Main implements Runnable{
                 g.fillOval(xpos, ypos,5,5);
             }
         }
+
+        int centerX = 505;
+        int centerY = 375;
+        int radius = 100;
+
+        int movingX = centerX +(int)(radius*cos(angle));
+        int movingY = centerY +(int)(radius*sin(angle));
+
+        g.setColor(Color.YELLOW);
+        g.fillOval(movingX,movingY,10,10);
 
         g.dispose();
         bufferStrategy.show();

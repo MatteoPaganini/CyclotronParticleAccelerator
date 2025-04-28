@@ -2,22 +2,34 @@ import static java.lang.Math.*;
 
 public class Physics {
 
-    double v; //velocity
-    double B; //magnetic field
-    double q; //point charge
-    double R; //radius
-    double m; //mass
-    double V; //potential difference
-    double F; //force
-    double theta;
-    //double c = 2.99 * 10^8; //how do I make this cleaner
-    double c = 2.99 * 100000000;
+    double v = 1e19; //velocity (m/s)
+    double B = 1.0; //magnetic field (T)
+    double q = 1.6e-19; //point charge (C)
+    double R; //radius (m)
+    double m; //mass (kg)
+    double V; //potential difference (V)
+    double F; //force (N)
+    double w; //angular frequency (Hz)
+    double theta = 3.14159/2; //angle (radians)
+    double c = 2.99e8; //speed of light
 
+
+//    public static void main(String[] args) {
+//        new Physics();
+//    }
+//
+//    Physics(){
+//        PhysicsMath();
+//    }
 
     public void PhysicsMath(){
-        F = q * (v*B*sin(theta));
-        R = m*v / (q*B); //if we adjust for relativity, we have to add the multiplyer "gamma" before mv
+
+        F = q*v*B; //assuming perpendicularity between v and B
+        R = m*v / (q*B); //if we adjust for relativity, we have to add the multiplier "gamma" before mv
         V = (m*v*v) / 2*q; //again here if we adjust for relativity, we substitute '(1+gamma)' for '2'
+        w = (q*B / m); //angular frequency is independent of v
+
+        System.out.println(F + " N");
     }
 
 }
