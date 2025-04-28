@@ -24,6 +24,12 @@ public class Main implements Runnable{
     public int xpos = 0;
     public int ypos = 0;
     public int angle = -20;
+
+    public double angle0;
+    public double angle1;
+    public double angle2;
+    public double angle3;
+
     public BufferStrategy bufferStrategy;
 
     public List<Physics> bodies;
@@ -120,7 +126,7 @@ public class Main implements Runnable{
 
             //moveThings(); //do I need it???
             render();  // paint the graphics
-            pause(20); // sleep for 10 ms
+            pause(2000); // sleep for 2s
         }
     }
 
@@ -138,18 +144,33 @@ public class Main implements Runnable{
 
             double f1 = (physics.q)*(physics.v)*(physics.B);
             System.out.println("Force: " + f1 + " N");
-
             double r1 = (physics.m*physics.v) / (physics.q*physics.B);
-            System.out.println("Radius: " + r1 + " N");
+            System.out.println("Radius: " + r1 + " meters");
+
+            angle0 = 0;
+            double x1 = r1*cos(angle0);
+            double y1 = r1*sin(angle0);
+            System.out.println("(" + x1 + "," + y1 + ")");
+            System.out.println(" ");
+
+
 
             //create an if statement
             physics.v = physics.v + 100;
 
-            double f2 = (physics.q)*(physics.v)*(physics.B);
-            System.out.println(f2);
 
+
+            double f2 = (physics.q)*(physics.v)*(physics.B);
+            System.out.println("Force: " + f2 + " N");
             double r2 = (physics.m*physics.v) / (physics.q*physics.B);
-            System.out.println("Radius: " + r2 + " N");
+            System.out.println("Radius: " + r2 + " meters");
+
+            angle1 = 1 / (y1/x1);
+            double x2 = r2*cos(angle1);
+            double y2 = r2*sin(angle1);
+            System.out.println("(" + x2 + "," + y2 + ")");
+            System.out.println(" ");
+
         }
     }
 

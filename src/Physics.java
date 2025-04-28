@@ -2,7 +2,7 @@ import static java.lang.Math.*;
 
 public class Physics {
 
-    double v = 2e25; //velocity (m/s)
+    double v = 1e6; //velocity (m/s)
     double B = 1.0; //magnetic field (T)
     double q = 1.6e-19; //point charge (C)
     double R; //radius (m)
