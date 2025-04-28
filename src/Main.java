@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -24,6 +26,8 @@ public class Main implements Runnable{
     public int angle = -20;
     public BufferStrategy bufferStrategy;
 
+    public List<Physics> bodies;
+
     public Main(){
 
         JFrame frame = new JFrame("Cyclotron Simulator");
@@ -46,6 +50,8 @@ public class Main implements Runnable{
         bufferStrategy = canvas.getBufferStrategy();
         canvas.getBufferStrategy();
 
+        bodies = new ArrayList<>();
+        bodies.add(new Physics(10,10));
 
     }
 
@@ -98,6 +104,13 @@ public class Main implements Runnable{
         g.setColor(Color.YELLOW);
         g.fillOval(movingX,movingY,10,10);
 
+        for (Physics physics : bodies){
+            g.setColor(Color.RED);
+            g.fillOval(515,275,15,15);
+
+            update();
+        }
+
         g.dispose();
         bufferStrategy.show();
     }
@@ -117,6 +130,26 @@ public class Main implements Runnable{
             Thread.sleep(time);
         } catch (InterruptedException e) {
 
+        }
+    }
+
+    public void update(){
+        for (Physics physics : bodies){
+
+            double f1 = (physics.q)*(physics.v)*(physics.B);
+            System.out.println("Force: " + f1 + " N");
+
+            double r1 = (physics.m*physics.v) / (physics.q*physics.B);
+            System.out.println("Radius: " + r1 + " N");
+
+            //create an if statement
+            physics.v = physics.v + 100;
+
+            double f2 = (physics.q)*(physics.v)*(physics.B);
+            System.out.println(f2);
+
+            double r2 = (physics.m*physics.v) / (physics.q*physics.B);
+            System.out.println("Radius: " + r2 + " N");
         }
     }
 
