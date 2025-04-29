@@ -19,6 +19,9 @@ import static java.lang.Math.*;
 
 public class Main implements Runnable{
 
+    private Thread simulationThread;
+    private boolean isRunning = false;
+
     static int WIDTH = 1000;
     static int HEIGHT = 800;
 
@@ -30,9 +33,6 @@ public class Main implements Runnable{
     public int angle = -20;
 
     public double angle0 = 0;
-    public double angle1;
-    public double angle2;
-    public double angle3;
 
     public double x1 = 0;
     public double y1 = 0;
@@ -40,6 +40,7 @@ public class Main implements Runnable{
     public int drawY;
 
     private boolean inGapZone = false;
+    private boolean showBField = false;
 
     public BufferStrategy bufferStrategy;
 
@@ -58,12 +59,22 @@ public class Main implements Runnable{
         panel.add(run, BorderLayout.SOUTH);
         panel.add(bField, BorderLayout.NORTH);
 
+        run.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!isRunning) {
+                    isRunning = true;
+                    simulationThread = new Thread(Main.this);
+                    simulationThread.start();
+                }
+            }
+        });
+
         bField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("BField button was clicked");
-                
-
+                showBField = !showBField; // toggle visibility
+                System.out.println("BField visibility: " + (showBField ? "ON" : "OFF"));
             }
         });
 
@@ -85,8 +96,7 @@ public class Main implements Runnable{
 
 
     public static void main(String[] args) {
-        Main main = new Main();
-        new Thread(main).start();
+        new Main();
     }
 
 
@@ -112,15 +122,22 @@ public class Main implements Runnable{
         g.fillOval(505,375,5,5); //this center point of the Cyclotron
         //...as long as I don't adjust the previous drawOval
 
-//        g.setColor(Color.CYAN);
-//        g.drawLine(500,40,500,700);
 
-        for (int xpos = 150; xpos < 900; xpos = xpos+60){
-            for (int ypos = 40; ypos < 850; ypos = ypos+60){
-                g.setColor(Color.BLUE);
-                g.fillOval(xpos, ypos,5,5);
+        if (showBField){
+            for (int xpos = 150; xpos < 900; xpos = xpos+60){
+                for (int ypos = 40; ypos < 850; ypos = ypos+60){
+                    g.setColor(Color.BLUE);
+                    g.fillOval(xpos, ypos,5,5);
+                }
             }
         }
+
+//        for (int xpos = 150; xpos < 900; xpos = xpos+60){
+//            for (int ypos = 40; ypos < 850; ypos = ypos+60){
+//                g.setColor(Color.BLUE);
+//                g.fillOval(xpos, ypos,5,5);
+//            }
+//        }
 
 
         for (Physics physics : bodies){
@@ -165,7 +182,7 @@ public class Main implements Runnable{
             System.out.println("Radius: " + r1 + " meters");
             System.out.println("Velocity: " + physics.v + " m/s");
 
-            angle0 += 0.01; //angle changes with each run... no need for a time variable
+            angle0 += 0.05; //angle changes with each run... no need for a time variable
             double x1 = r1*100*cos(angle0); //scaling up from meters --> pixels
             double y1 = r1*100*sin(angle0);
             drawX = (int)(centerX + x1); //orientating the variable to the center point
