@@ -2,7 +2,7 @@ import static java.lang.Math.*;
 
 public class Physics {
 
-    double v = 1e6; //velocity (m/s)
+    double v = 1e8; //velocity (m/s)
     double B = 1.0; //magnetic field (T)
     double q = 1.6e-19; //point charge (C)
     double R; //radius (m)
@@ -22,10 +22,10 @@ public class Physics {
 //        PhysicsMath(); //I turned PhysicsMath into Physics constructor
 //    }
 
-    public Physics(double F, double R){
+    public Physics(){
 
-        this.F = q*v*B; //assuming perpendicularity between v and B
-        this.R = (m*v) / (q*B); //if we adjust for relativity, we have to add the multiplier "gamma" before mv
+        F = q*v*B; //assuming perpendicularity between v and B
+        R = (m*v) / (q*B); //if we adjust for relativity, we have to add the multiplier "gamma" before mv
 
         V = (m*v*v) / (2*q); //again here if we adjust for relativity, we substitute '(1+gamma)' for '2'
         w = (q*B / m); //angular frequency is independent of v

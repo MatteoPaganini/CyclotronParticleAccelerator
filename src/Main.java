@@ -4,8 +4,7 @@ import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 //Questions for Mx. Bradford:
 //1) Do I still need the moveThings() method
@@ -21,14 +20,22 @@ public class Main implements Runnable{
     static int WIDTH = 1000;
     static int HEIGHT = 800;
 
+    int centerX = 505;
+    int centerY = 375;
+
     public int xpos = 0;
     public int ypos = 0;
     public int angle = -20;
 
-    public double angle0;
+    public double angle0 = 0;
     public double angle1;
     public double angle2;
     public double angle3;
+
+    public double x1 = 0;
+    public double y1 = 0;
+    public int drawX;
+    public int drawY;
 
     public BufferStrategy bufferStrategy;
 
@@ -57,7 +64,7 @@ public class Main implements Runnable{
         canvas.getBufferStrategy();
 
         bodies = new ArrayList<>();
-        bodies.add(new Physics(10,10));
+        bodies.add(new Physics());
 
     }
 
@@ -87,7 +94,7 @@ public class Main implements Runnable{
         }
 
         g.setColor(Color.RED);
-        g.fillOval(505,375,5,5); //this point is the center of the Cyclotron
+        g.fillOval(505,375,5,5); //this center point of the Cyclotron
         //...as long as I don't adjust the previous drawOval
 
 //        g.setColor(Color.CYAN);
@@ -100,22 +107,13 @@ public class Main implements Runnable{
             }
         }
 
-        int centerX = 505;
-        int centerY = 375;
-        int radius = 100;
-
-        int movingX = centerX +(int)(radius*cos(angle));
-        int movingY = centerY +(int)(radius*sin(angle));
-
-        g.setColor(Color.YELLOW);
-        g.fillOval(movingX,movingY,10,10);
-
         for (Physics physics : bodies){
-            g.setColor(Color.RED);
-            g.fillOval(515,275,15,15);
 
+            g.setColor(Color.RED);
+            g.fillOval(drawX,drawY,10,10);
             update();
         }
+
 
         g.dispose();
         bufferStrategy.show();
@@ -124,9 +122,11 @@ public class Main implements Runnable{
     public void run() {
         while (true) {
 
-            //moveThings(); //do I need it???
-            render();  // paint the graphics
-            pause(2000); // sleep for 2s
+            render(); //paint graphics
+            update();
+            //repaint();
+            pause(500); // sleep for 2s
+
         }
     }
 
@@ -147,29 +147,37 @@ public class Main implements Runnable{
             double r1 = (physics.m*physics.v) / (physics.q*physics.B);
             System.out.println("Radius: " + r1 + " meters");
 
-            angle0 = 0;
-            double x1 = r1*cos(angle0);
-            double y1 = r1*sin(angle0);
-            System.out.println("(" + x1 + "," + y1 + ")");
+            angle0 += 0.05;
+            double x1 = r1*100*cos(angle0); //1 pixel = 0.001 meters
+            double y1 = r1*100*sin(angle0);
+            drawX = (int)(centerX + x1);
+            drawY = (int)(centerY + y1);
+            System.out.println(drawX);
+            System.out.println(drawY);
+
+            System.out.println("(" + drawX + "," + drawY + ")");
+
             System.out.println(" ");
+
+
 
 
 
             //create an if statement
-            physics.v = physics.v + 100;
-
-
-
-            double f2 = (physics.q)*(physics.v)*(physics.B);
-            System.out.println("Force: " + f2 + " N");
-            double r2 = (physics.m*physics.v) / (physics.q*physics.B);
-            System.out.println("Radius: " + r2 + " meters");
-
-            angle1 = 1 / (y1/x1);
-            double x2 = r2*cos(angle1);
-            double y2 = r2*sin(angle1);
-            System.out.println("(" + x2 + "," + y2 + ")");
-            System.out.println(" ");
+//            physics.v = physics.v + 100;
+//
+//
+//
+//            double f2 = (physics.q)*(physics.v)*(physics.B);
+//            System.out.println("Force: " + f2 + " N");
+//            double r2 = (physics.m*physics.v) / (physics.q*physics.B);
+//            System.out.println("Radius: " + r2 + " meters");
+//
+//            angle1 = Math.atan(x1/y1);
+//            double x2 = r2*cos(angle1);
+//            double y2 = r2*sin(angle1);
+//            System.out.println("(" + x2 + "," + y2 + ")");
+//            System.out.println(" ");
 
         }
     }
