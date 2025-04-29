@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ public class Main implements Runnable{
     public int drawX;
     public int drawY;
 
+    private boolean inGapZone = false;
+
     public BufferStrategy bufferStrategy;
 
     public List<Physics> bodies;
@@ -49,8 +53,19 @@ public class Main implements Runnable{
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.add(new JButton("Run!"), BorderLayout.SOUTH);
-        panel.add(new JButton("See B Field"), BorderLayout.NORTH);
+        JButton run = new JButton("Run");
+        JButton bField = new JButton("See B Field");
+        panel.add(run, BorderLayout.SOUTH);
+        panel.add(bField, BorderLayout.NORTH);
+
+        bField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("BField button was clicked");
+                
+
+            }
+        });
 
         Canvas canvas = new Canvas();
         canvas.setBackground(Color.BLACK);
@@ -107,6 +122,7 @@ public class Main implements Runnable{
             }
         }
 
+
         for (Physics physics : bodies){
 
             g.setColor(Color.RED);
@@ -123,9 +139,10 @@ public class Main implements Runnable{
         while (true) {
 
             render(); //paint graphics
+            moveThings(); //check if particle crosses
             update();
             //repaint();
-            pause(500); // sleep for 2s
+            pause(10); // sleep for 2s
 
         }
     }
@@ -147,7 +164,7 @@ public class Main implements Runnable{
             double r1 = (physics.m*physics.v) / (physics.q*physics.B);
             System.out.println("Radius: " + r1 + " meters");
 
-            angle0 += 0.05;
+            angle0 += 0.01;
             double x1 = r1*100*cos(angle0); //1 pixel = 0.001 meters
             double y1 = r1*100*sin(angle0);
             drawX = (int)(centerX + x1);
@@ -158,10 +175,6 @@ public class Main implements Runnable{
             System.out.println("(" + drawX + "," + drawY + ")");
 
             System.out.println(" ");
-
-
-
-
 
             //create an if statement
 //            physics.v = physics.v + 100;
@@ -183,8 +196,24 @@ public class Main implements Runnable{
     }
 
     public void moveThings(){
-        //xpos = xpos+3;
-        //ypos = ypos+1;
+
+        for (Physics physics : bodies) {
+
+            if (Math.abs(drawX - 500) < 3) { //checking if the particle is near the E field
+
+                if (!inGapZone){ //helps code run smoother
+                    physics.v += 1e7; //simulates the kick from the accelerating gap
+                    inGapZone = true;
+                    System.out.println("Crossed gap — increasing velocity to: " + physics.v);
+
+                }
+
+                else {
+                    inGapZone = false;
+                }
+
+            }
+        }
     }
 
 
