@@ -101,7 +101,7 @@ public class Main implements Runnable{
         g.fillOval(180,50,650,650);
 
         for (int a = 0; a <= 20; a++){
-            for (int ypos = 40; ypos < 710; ypos++){
+            for (int ypos = 50; ypos < 700; ypos++){
                 g.setColor(Color.BLACK);
                 g.fillOval(505, ypos,5,5);
                 //pause(10); //shows the animation?
@@ -126,7 +126,7 @@ public class Main implements Runnable{
         for (Physics physics : bodies){
 
             g.setColor(Color.RED);
-            g.fillOval(drawX,drawY,10,10);
+            g.fillOval(drawX,drawY,7,7);
             update();
         }
 
@@ -163,34 +163,19 @@ public class Main implements Runnable{
             System.out.println("Force: " + f1 + " N");
             double r1 = (physics.m*physics.v) / (physics.q*physics.B);
             System.out.println("Radius: " + r1 + " meters");
+            System.out.println("Velocity: " + physics.v + " m/s");
 
-            angle0 += 0.01;
-            double x1 = r1*100*cos(angle0); //1 pixel = 0.001 meters
+            angle0 += 0.01; //angle changes with each run... no need for a time variable
+            double x1 = r1*100*cos(angle0); //scaling up from meters --> pixels
             double y1 = r1*100*sin(angle0);
-            drawX = (int)(centerX + x1);
+            drawX = (int)(centerX + x1); //orientating the variable to the center point
             drawY = (int)(centerY + y1);
-            System.out.println(drawX);
+            System.out.println(drawX); //so we can see manually
             System.out.println(drawY);
 
             System.out.println("(" + drawX + "," + drawY + ")");
 
             System.out.println(" ");
-
-            //create an if statement
-//            physics.v = physics.v + 100;
-//
-//
-//
-//            double f2 = (physics.q)*(physics.v)*(physics.B);
-//            System.out.println("Force: " + f2 + " N");
-//            double r2 = (physics.m*physics.v) / (physics.q*physics.B);
-//            System.out.println("Radius: " + r2 + " meters");
-//
-//            angle1 = Math.atan(x1/y1);
-//            double x2 = r2*cos(angle1);
-//            double y2 = r2*sin(angle1);
-//            System.out.println("(" + x2 + "," + y2 + ")");
-//            System.out.println(" ");
 
         }
     }
@@ -199,10 +184,10 @@ public class Main implements Runnable{
 
         for (Physics physics : bodies) {
 
-            if (Math.abs(drawX - 500) < 3) { //checking if the particle is near the E field
+            if (Math.abs(drawX - 500) < 5) { //checking if the particle is near the E field
 
                 if (!inGapZone){ //helps code run smoother
-                    physics.v += 1e7; //simulates the kick from the accelerating gap
+                    physics.v += 4.38e5; //simulates the kick from the accelerating gap
                     inGapZone = true;
                     System.out.println("Crossed gap — increasing velocity to: " + physics.v);
 
