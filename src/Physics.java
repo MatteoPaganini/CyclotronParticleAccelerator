@@ -2,7 +2,7 @@ import static java.lang.Math.*;
 
 public class Physics {
 
-    double v = 1.5e7; //velocity (m/s)
+    double v = 2.73e5; //velocity (m/s)
     double B = 1.0; //magnetic field (T)
     double q = 1.602e-19; //point charge (C)
     double R; //radius (m)
@@ -11,6 +11,7 @@ public class Physics {
     double F; //force (N)
     double w; //angular frequency (Hz)
     double PE; //potential energy (J)
+    double E; //electric field (V/m)
     double vFinal1;
     double aThroughGap; //constant a of the particle through the gap (m/s*s)
     double x = 0.02; //distance between the dees (m)
@@ -27,7 +28,8 @@ public class Physics {
         F = q*v*B; //assuming perpendicularity between v and B
         R = (m*v) / (q*B); //if we adjust for relativity, we have to add the multiplier "gamma" before mv
         PE = q*V;
-        aThroughGap = PE / m;
+        E = V/x;
+        aThroughGap = (q*E) / m;
         vFinal1 = (2*aThroughGap*x);
         vFinal2 = sqrt(vFinal1);
 
@@ -39,6 +41,7 @@ public class Physics {
         System.out.println(PE + " J");
         System.out.println(aThroughGap + " m/s*s");
         System.out.println(vFinal2 + " m/s");
+        System.out.println(w + " Hz");
 
     }
 

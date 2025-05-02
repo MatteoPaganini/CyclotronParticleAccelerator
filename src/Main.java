@@ -28,10 +28,6 @@ public class Main implements Runnable{
     int centerX = 505;
     int centerY = 375;
 
-    public int xpos = 0;
-    public int ypos = 0;
-    public int angle = -20;
-
     public double angle0 = 0;
 
     public double x1 = 0;
@@ -111,7 +107,7 @@ public class Main implements Runnable{
         g.fillOval(180,50,650,650);
 
         for (int a = 0; a <= 20; a++){
-            for (int ypos = 50; ypos < 700; ypos++){
+            for (int ypos = 40; ypos < 700; ypos++){
                 g.setColor(Color.BLACK);
                 g.fillOval(505, ypos,5,5);
                 //pause(10); //shows the animation?
@@ -132,17 +128,10 @@ public class Main implements Runnable{
             }
         }
 
-//        for (int xpos = 150; xpos < 900; xpos = xpos+60){
-//            for (int ypos = 40; ypos < 850; ypos = ypos+60){
-//                g.setColor(Color.BLUE);
-//                g.fillOval(xpos, ypos,5,5);
-//            }
-//        }
-
 
         for (Physics physics : bodies){
 
-            g.setColor(Color.RED);
+            g.setColor(Color.GREEN);
             g.fillOval(drawX,drawY,7,7);
             update();
         }
@@ -183,8 +172,8 @@ public class Main implements Runnable{
             System.out.println("Velocity: " + physics.v + " m/s");
 
             angle0 += 0.05; //angle changes with each run... no need for a time variable
-            double x1 = r1*100*cos(angle0); //scaling up from meters --> pixels
-            double y1 = r1*100*sin(angle0);
+            double x1 = r1*1039*cos(angle0); //scaling up from meters --> pixels
+            double y1 = r1*1039*sin(angle0);
             drawX = (int)(centerX + x1); //orientating the variable to the center point
             drawY = (int)(centerY + y1);
             System.out.println(drawX); //so we can see manually
@@ -201,10 +190,10 @@ public class Main implements Runnable{
 
         for (Physics physics : bodies) {
 
-            if (Math.abs(drawX - 500) < 5) { //checking if the particle is near the E field
+            if (Math.abs(drawX - 500) < 30) { //checking if the particle is near the E field
 
                 if (!inGapZone){ //helps code run smoother
-                    physics.v += 4.38e5; //simulates the kick from the accelerating gap
+                    physics.v += 2.73e5; //simulates the kick from the accelerating gap
                     inGapZone = true;
                     System.out.println("Crossed gap — increasing velocity to: " + physics.v);
 
